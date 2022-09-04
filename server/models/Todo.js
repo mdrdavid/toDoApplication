@@ -1,6 +1,7 @@
 
 import mongoose from "mongoose";
 
+//use mongoose to create todo schema
 const ToDoSchema = new mongoose.Schema({
     todo: {
         type: String,
@@ -8,4 +9,4 @@ const ToDoSchema = new mongoose.Schema({
     },
 }, { timestamps:true })
 
-export default mongoose.model("ToDo", UserSchema)
+export default mongoose.model("ToDo", ToDoSchema)

@@ -1,18 +1,19 @@
 import express from 'express'
-// import{ deleteUser, getUser, update} from "../controllers/auth.js"
-
+import { deleteUser } from '../controllers/user.js'
+import { getUser } from '../controllers/user.js'
+import { update } from '../controllers/user.js'
 
 
 const router = express.Router()
 
 //get User
-router.get("/find/:id" )
+router.get("/find/:id", getUser)
 
 //update User
-router.put("/:id")
+router.put("/:id", update)
 
 //delete User
-router.delete("/:id")
+router.delete("/:id", deleteUser)
 
 
 export default router
