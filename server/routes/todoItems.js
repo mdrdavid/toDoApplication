@@ -5,9 +5,7 @@ import verifyToken from '../midleware/verifyToken.js';
 import { createError } from '../error.js';
 
 const router = express.Router()
-
 //add todo item to the database
-
 router.post("/items", async (req, res) => {
     try {
         console.log("request", req.body)
@@ -38,7 +36,6 @@ router.get("/items", async (req, res, next) => {
 })
 
 // update item in the database
-
 router.put("/items/:id", verifyToken, async (req, res, next) => {
     console.log("request", req.user)
 
@@ -67,22 +64,20 @@ router.put("/items/:id", verifyToken, async (req, res, next) => {
 })
 
 // delete item from database
-
 router.delete("/items/:id", async (req, res, next) => {
     try {
-        // find item by id and delete it 
         const deletedItem = await Todo.findById(req.params.id)
-        if(!deletedItem) return next(createError(404, "Item not found"))
-        if(req.user.id ===req.body.id){
+        if (!deletedItem) return next(createError(404, "Item not found"))
+        if (req.user.id === req.body.id) {
+            // find item by id and delete it 
             const deleted = await Todo.findByIdAndDelete(req.params.id);
             res.status(200).json(deleted).send("Item deleted")
-        } else{
+        } else {
             return next(createError(403, "You can update your item"))
         }
     } catch (error) {
         return next(createError(403, "Unable to delete item"))
     }
-
 })
 
 export default router;
