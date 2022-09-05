@@ -3,7 +3,7 @@ import express from "express"
 import mongoose from "mongoose";
 import dotenv from "dotenv"
 import todoItemRoute from "./routes/todoItems.js"
-// import useRoutes from "./routes/user.js"
+import useRoutes from "./routes/auth.js"
 
 const app = express()
 
@@ -23,20 +23,18 @@ const connect = ()=>{
 
 
 
-app.get("/", (req, res)=>{
-    res.send("hello world")
-})
 
 //use express.josn() to get data into json format
 app.use(express.json())
 
-app.use("/", todoItemRoute)
-// app.use("/api/users", useRoutes)
+app.use("/api", todoItemRoute)
+app.use("/api/auth", useRoutes)
+// app.use("/api/auth", useRoutes)
 
 
 
-const PORT = 5000
+const PORT = process.env.PORT || 8000
 //connect to sever 
-app.listen(process.env.PORT || 5500, ()=>{
+app.listen(PORT, ()=>{
 connect()
 console.log(`Server Running at Port ${PORT}`)})
