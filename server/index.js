@@ -11,7 +11,7 @@ dotenv.config()
 
 //connect to mongodb database
 const connect = ()=>{
-    mongoose.connect("mongodb+srv://davidm:davidm@todolistapp.to1kqjy.mongodb.net/?retryWrites=true&w=majority").then(()=>{
+    mongoose.connect(process.env.MONGODB_URL).then(()=>{
         console.log("Connected to MongoDB")
     })
     .catch((err) =>{
