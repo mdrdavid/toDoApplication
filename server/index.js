@@ -35,8 +35,8 @@ app.use("/", todoItemRoute)
 
 
 
-const PORT = 5000
+const port = process.env.PORT || 5500
 //connect to sever 
-app.listen(process.env.PORT || 5500, ()=>{
+app.listen(port, ()=>{
 connect()
-console.log(`Server Running at Port ${PORT}`)})
+console.log(`Server Running at Port ${port}`)})
