@@ -1,6 +1,7 @@
 
 import express from 'express'
 import Todo from "../models/Todo.js";
+import verifyToken from '../midleware/verifyToken.js';
 
 const router = express.Router()
 
@@ -24,7 +25,7 @@ res.status(200).json("Item has been sucessfuly added")
 })
 
 // get data from the database
-router.get("/items", async(req,res)=>{
+router.get("/items", async(req,res, next)=>{
     try {
         const getAllToDoItems = await Todo.find({
         
@@ -40,23 +41,38 @@ router.get("/items", async(req,res)=>{
 
 // update item in the database
 
-router.put("/items/:id", async (req, res)=>{
-try {
+router.put("/items/:id", verifyToken, async (req, res, next)=>{
+    console.log("request", req.user)
+    
+    try {
     // find the item by its id and update it
     const updateItem = await Todo.findByIdAndUpdate(req.params.id,
-        {$set: req.body})
-        res.status(200).json("Item updated")
+        
+        {$set: req.body},
+        // { new:true }
+        )
+        // find whether item exists and update before 
+        
+            res.status(200).json("Item updated")
+       
 } catch (error) {
     res.status(500).json({
         message: "unable to update item",
         error: error.message,
       })
     }
+
+// }
+// else{
+//     return next(createError(403, "You can only update your item"))
+// }
+
 })
 
 // delete item from database
 
-router.delete("/items/:id", async (req, res)=>{
+router.delete("/items/:id", async (req, res, next)=>{
+    // if(req.params?.id === req?.user?.id){
     try {
         // find item by id and delete it 
         const deletedItem = await Todo.findByIdAndDelete(req.params.id)
@@ -67,6 +83,10 @@ router.delete("/items/:id", async (req, res)=>{
             error: error.message,
           })
     }
+// }
+// else{
+//     return next(createError(403, "You can only delete your item"))
+// }
     
 })
 

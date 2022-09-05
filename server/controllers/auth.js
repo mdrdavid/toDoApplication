@@ -10,7 +10,7 @@ import { createError } from "../error.js";
 
 export const signup = async (req,res, next)=>{
 try{
-    User.findOne({ email: req.body.email}, async (err, doc)=>{
+    const user = User.findOne({ email: req.body.email}, async (err, doc)=>{
         if(err){
             next(err)
         }
@@ -33,23 +33,30 @@ try{
 export const signin = async (req, res, next) => {
 
     try {
-        const user = await User.findOne({name:req.body.name})
+        const user = await User.findOne({ name: req.body.name })
         console.log("user", user)
         if (!user) {
             return next(createError(404, "user not found"))
         } else {
-          res.status(200).json({
-            message: "Login successful",
-            user,
-          })
+            //Authentication using JWT
+        const token = Jwt.sign({ id: user._id }, process.env.TOKEN_KEY)
+        console.log("ids", user._id)
+        // save user token
+        user.token = token;
+        console.log("token", token)
+            res.status(200).json({
+                message: "Login successful",
+                user,
+                token
+            })
         }
-      } catch (error) {
+    } catch (error) {
         res.status(400).json({
             message: "An error occurred",
             error: error.message,
-          })
-      }
+        })
     }
+}
 
 
 
