@@ -26,10 +26,9 @@ const connect = ()=>{
 
 //use express.josn() to get data into json format
 app.use(express.json())
-
 app.use("/api", todoItemRoute)
 app.use("/api/auth", useRoutes)
-// app.use("/api/auth", useRoutes)
+
 
 
 
