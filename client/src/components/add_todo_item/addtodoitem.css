@@ -1,0 +1,28 @@
+
+.add-t0d0-item{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+}
+.add-item{
+    padding: 10px;
+    border-radius: 5px;
+    width: 85%;
+}
+
+.add-item:focus,
+.submit-button:focus{
+    outline: none;
+}
+
+.submit-button{
+    width: 200px;
+    color: white;
+    background-color: purple;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    cursor: pointer;
+}

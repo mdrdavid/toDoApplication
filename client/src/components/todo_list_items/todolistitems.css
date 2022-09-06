@@ -1,0 +1,41 @@
+
+.todo-list-items{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.todo-item{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    gap: 5px;
+}
+.item-text{
+    width: 65%;
+}
+
+.todo-item button{
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 8px;
+    color: white;
+}
+
+.todo-item button:focus{
+    outline: none;
+}
+
+.update{
+    background-color: goldenrod;
+}
+
+.complete{
+    background-color: purple;
+}
+
+.delete{
+    background-color: green;
+}
