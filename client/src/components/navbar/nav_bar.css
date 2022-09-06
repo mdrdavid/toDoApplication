@@ -1,0 +1,46 @@
+
+.nav-container{
+    margin-bottom: 10px;
+    position: sticky;
+    top: 0;
+    height: 56px;
+    color: white;
+    background-color: #9A2585;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    text-decoration: none;
+    
+}
+
+.nav-container:focus {
+  display: flex;
+  align-items: center;
+  color: #a8a9b4;
+  padding: 12px 15px;
+  margin-bottom: 8px;
+  transition: 0.3s;
+  font-size: 15px;
+}
+
+.nav-link{
+    color:white;
+ font-size: 18px;
+ text-decoration: none;
+}
+
+.nav-link:focus{
+    color: #149ddd;
+    padding: 12px 15px;
+    margin-bottom: 8px;
+    transition: 0.3s;
+    font-size: 15px;
+  }
+
+  .nav-link:active{
+      color: white;
+  }
+
+  .nav-link:hover{
+    background-color: #149ddd;
+}

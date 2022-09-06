@@ -1,18 +1,16 @@
 
 import './App.css';
-import TodoLIst from './components/todolist/TodoLIst';
-import AddTodoItem from './components/add_todo_item/AddTodoItem';
-import TodoListItems from './components/todo_list_items/TodoListItems';
+import { Routes, Route } from "react-router-dom";
 import SignIn from './pages/signin/Signin';
+import TodoPage from './pages/todopage/TodoPage';
 
 function App() {
   return (
     <div className="App">
-     <TodoLIst>
-       <AddTodoItem/>
-       <TodoListItems/>
-     </TodoLIst>
-     <SignIn/>
+     <Routes>
+     <Route index element={<SignIn />} />
+      <Route path="todo" element={<TodoPage />} />
+      </Routes>
     </div>
   );
 }

@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import "./signin.css"
 import axios from 'axios'
 import { URL } from '../../components/Constants'
+import NavBar from '../../components/navbar/Navbar'
 
 
 const SignIn = () => {
@@ -59,6 +60,7 @@ const SignIn = () => {
 
     return (
         <>
+        <NavBar/>
             <div className='container'>
                 <div className='wrapper'>
                     <div className='title'>
@@ -77,10 +79,8 @@ const SignIn = () => {
                         value={password}
                         onChange={handlePassword} />
                     <button type='submit' className='signin-button' onClick={handleSignin}>Sign in</button>
-
                     <h5>or Sign up</h5>
-
-                    <hr></hr>
+                    
                     <div className='alt_login'>
                         <input type="text"
                             name="name"
