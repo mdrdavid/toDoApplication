@@ -10,7 +10,4 @@ router.post("/signup", signup)
 //SIGN IN
 router.post("/signin", signin)
 
-//GOOGLE AUTH
-
 export default router
-// module.exports = router;
