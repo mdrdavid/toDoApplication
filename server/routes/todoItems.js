@@ -6,25 +6,29 @@ import { createError } from '../error.js';
 
 const router = express.Router()
 //add todo item to the database
-router.post("/items", async (req, res) => {
+router.post("/items", verifyToken, async (req, res, next) => {
     try {
-        console.log("request", req.body)
+        const userId = req.user.payload.id
         const newItem = new Todo({
-            todo: req.body.todo
+            todo: req.body.todo,
+            userId,
+            completed: false
         })
         // saving the item in the database
         const saveNewItem = await newItem.save()
-        res.status(200).json("Item has been sucessfuly added")
+        res.status(200).json({ data: saveNewItem, message: "Item has been sucessfuly added" })
     } catch (error) {
+        console.log("error", JSON.stringify(error))
         return next(createError(500, "Unable to add item"))
     }
 })
 
 // get data from the database
-router.get("/items", async (req, res, next) => {
+router.get("/items", verifyToken, async (req, res, next) => {
     try {
+        const userId = req.user.payload.id
         const getAllToDoItems = await Todo.find({
-
+            userId
         })
         res.status(200).json(getAllToDoItems)
     } catch (error) {
@@ -37,25 +41,22 @@ router.get("/items", async (req, res, next) => {
 
 // update item in the database
 router.put("/items/:id", verifyToken, async (req, res, next) => {
-    console.log("request", req.user)
-
     try {
+        const userId = req.user.payload.id
+        const _id = req.params.id
+
         // find the item by its id and update it
-        const updateItem = await Todo.findById(req.params.id)
-        if (!updateItem) return next(createError(404, "Item not found"))
-        console.log("usee",updateItem)
-        if (req.user.id === req.body.id) {
+        const itemToUpdate = await Todo.find({ _id, userId })
+        if (!itemToUpdate) { return next(createError(404, "Item not found")) }
+        else {
             const updatedItem = await Todo.findByIdAndUpdate(
-                req.params.id,
+                _id,
                 {
                     $set: req.body
                 },
                 { new: true }
             );
-            res.status(200).json(updatedItem).send("Item updated")
-            }
-        else {
-            return next(createError(403, "Item does not exist"))
+            res.status(200).json({ data: updatedItem, message: "Item updated" })
         }
     } catch (error) {
         return next(createError(403, "Unable to update item"))
@@ -64,19 +65,20 @@ router.put("/items/:id", verifyToken, async (req, res, next) => {
 })
 
 // delete item from database
-router.delete("/items/:id", async (req, res, next) => {
+router.delete("/items/:id", verifyToken, async (req, res, next) => {
+    const userId = req.user.payload.id
+    const _id = req.params.id
     try {
-        const deletedItem = await Todo.findById(req.params.id)
-        if (!deletedItem) return next(createError(404, "Item not found"))
-        if (req.user.id === req.body.id) {
+        const item = await Todo.find({ _id, userId })
+        if (!item) { return next(createError(404, "Item not found")) }
+        else {
             // find item by id and delete it 
-            const deleted = await Todo.findByIdAndDelete(req.params.id);
-            res.status(200).json(deleted).send("Item deleted")
-        } else {
-            return next(createError(403, "You can update your item"))
+            await Todo.findByIdAndDelete({ _id });
+            res.status(200).json({ message: "Item deleted" })
         }
     } catch (error) {
-        return next(createError(403, "Unable to delete item"))
+        console.log("error", JSON.stringify(error))
+        return next(createError(500, "Unable to delete item"))
     }
 })
 

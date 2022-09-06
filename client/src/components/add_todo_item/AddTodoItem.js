@@ -1,22 +1,33 @@
 
 import React, { useState } from 'react'
+import axios from "axios"
+import {URL} from "../Constants"
 import "./addtodoitem.css"
 
 const  AddTodoItem = () => {
     const [input, setInput] = useState("")
+  const [listItems, setListItems] = useState([])
+ 
 
     const handleChange=(e)=>{
         setInput(e.target.value)
         // setInput((prev)=>({...prev, [e.target.name]: e.target.value}))
     }
     
-    const handleSubmit= (e)=>{
+// this finction takes the todo items from the user and sends it to the database
+    const addItem = async (e)=>{
         e.preventDefault();
-        setInput("")
-    }
-
+            try {
+                const res = await axios.post(`${URL}/items`, {todo:input})
+                setListItems(prev=>[...prev,res.data])
+                console.log(res)
+                setInput("")
+            } catch (error) {
+                console.log(error)
+            }
+        }
   return (
-    <form className="add-todo-item" onSubmit={handleSubmit}>
+    <form className="add-todo-item" onSubmit={addItem}>
         <input type="text" 
         name="item" 
         value={input}

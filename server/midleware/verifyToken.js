@@ -7,7 +7,7 @@ const verifyToken = (req, res, next) => {
   const authHeader =
     req.body.token || req.query.token || req.headers["authorization"];
   //extracting token
-  const token = authHeader.substring(7, authHeader.length);
+  const token = authHeader?.substring(7, authHeader.length);
 
   if (!token) {
     return res.status(403).send("A token is required for authentication");

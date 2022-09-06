@@ -4,6 +4,7 @@
     justify-content: space-between;
     width: 100%;
     align-items: center;
+    margin-bottom: 12px;
 }
 .add-item{
     padding: 10px;
