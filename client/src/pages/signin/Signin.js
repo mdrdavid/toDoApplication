@@ -4,9 +4,11 @@ import "./signin.css"
 import axios from 'axios'
 import { URL } from '../../components/Constants'
 import NavBar from '../../components/navbar/Navbar'
+import { useNavigate } from "react-router-dom";
 
 
 const SignIn = () => {
+    const nav = useNavigate();
     const [name, setName] = useState("")
     const [password, setPassword] = useState("")
 
@@ -26,28 +28,19 @@ const SignIn = () => {
         setValue((prev) => ({ ...prev, [e.target.name]: e.target.value }))
     }
 
-    const headers = {
-        'Content-Type': 'application/json',
-        'Authorization': 'token'
-    }
-
     const handleSignUp = async (e) => {
         e.preventDefault()
         const message = "you are signed up"
         try {
             if (!(value.email && value.password && value.name)) {
                 alert("complete form")
-                // res.status(400).send("All input is required");
             } else {
                 const res = await axios({
                     method: 'post',
-                    // headers: headers,
                     url: `${URL}/auth/signup`,
                     data: value
                 })
-                //store token to local storage
-                // localStorage.setItem("User", JSON.stringify(res.data))
-                // console.log("data", res)
+                console.log("data", res)
                 alert(message)
                 setValue({ name: "", email: "", password: "" })
             }
@@ -67,6 +60,7 @@ const SignIn = () => {
             //add to local storage
             localStorage.setItem("token", res.data.token)
             console.log("localStorage", res.data)
+            nav("/todo")
             setName('')
             setPassword('')
         } catch (err) {
@@ -94,7 +88,8 @@ const SignIn = () => {
                         placeholder="password"
                         value={password}
                         onChange={handlePassword} />
-                    <button type='submit' className='signin-button' onClick={handleSignin}>Sign in</button>
+                        <button type='submit' className='signin-button' onClick={handleSignin}>Sign in</button>
+
                     <h5>or Sign up</h5>
 
                     <div className='alt_login'>
