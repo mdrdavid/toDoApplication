@@ -15,7 +15,14 @@ const  TodoItem = ({todo}) => {
     console.log("idd", id)
     console.log("idd", todo)
         try {
-            const res = await axios.delete(`${URL}/items/${id}`)
+          const token = localStorage.getItem("token")
+            const res = await axios({
+              method: "delete",
+              headers:{
+                'Authorization': `Bearer ${token}`
+            },
+              url:`${URL}/items/${id}`
+            })
             const newlistItems = todoItems.filter((item=>item._id !==id))
             setTodoItems(newlistItems)
             console.log(res.data)
@@ -27,7 +34,13 @@ const  TodoItem = ({todo}) => {
     //update item
     const updateItem = async (e) => {
       e.preventDefault()
-      const res = await axios.put(`${URL}/items/${isUpdating}`,{item: UpdateItemText})
+      const res = await axios({
+        mathod: "put",
+        url:`${URL}/items/${isUpdating}`,
+        headers:{
+          'Authorization': `Bearer ${token}`
+      },
+        data:{item: UpdateItemText}})
       setIsupdateItemText(" ")
       setIsupdating(" ")
     }

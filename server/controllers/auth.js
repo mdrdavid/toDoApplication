@@ -41,12 +41,18 @@ export const signin = async (req, res, next) => {
             //Authente user by assing a json web token
             const token = Jwt.sign({ id: user._id }, process.env.TOKEN_KEY)
             // save user token
-            user.token = token;
-            res.status(200).json({
+            // user.token = token;
+            const {password, ...others} = user
+            res.cookie("access_token", token,{
+                httpOnly:true
+            }).status(200)
+            // .json(others)
+            // res.status(200)
+            .json({
                 message: "Login successful",
-                user,
                 token
             })
+            console.log("res", res)
         }
     } catch (error) {
         return next(createError(400, "An error occured"))

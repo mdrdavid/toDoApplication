@@ -26,6 +26,11 @@ const SignIn = () => {
         setValue((prev) => ({ ...prev, [e.target.name]: e.target.value }))
     }
 
+    const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'token'
+    }
+
     const handleSignUp = async (e) => {
         e.preventDefault()
         const message = "you are signed up"
@@ -34,14 +39,15 @@ const SignIn = () => {
                 alert("complete form")
                 // res.status(400).send("All input is required");
             } else {
-              const res = await  axios({
+                const res = await axios({
                     method: 'post',
+                    // headers: headers,
                     url: `${URL}/auth/signup`,
                     data: value
-                  })
-                // const res = await axios.post(`${URL}/auth/signup`, value)
-                console.log("data", res)
-                res.status(200).json("sendUser")
+                })
+                //store token to local storage
+                // localStorage.setItem("User", JSON.stringify(res.data))
+                // console.log("data", res)
                 alert(message)
                 setValue({ name: "", email: "", password: "" })
             }
@@ -53,9 +59,14 @@ const SignIn = () => {
         e.preventDefault()
         const message = "Login successful"
         try {
-            const res = await axios.post(`${URL}/auth/signin`, { name, password })
-            const rese = res.data
-            console.log(rese)
+            const res = await axios({
+                method: "post",
+                url: `${URL}/auth/signin`,
+                data: { name, password }
+            })
+            //add to local storage
+            localStorage.setItem("token", res.data.token)
+            console.log("localStorage", res.data)
             setName('')
             setPassword('')
         } catch (err) {
@@ -65,7 +76,7 @@ const SignIn = () => {
 
     return (
         <>
-        <NavBar/>
+            <NavBar />
             <div className='container'>
                 <div className='wrapper'>
                     <div className='title'>
@@ -85,7 +96,7 @@ const SignIn = () => {
                         onChange={handlePassword} />
                     <button type='submit' className='signin-button' onClick={handleSignin}>Sign in</button>
                     <h5>or Sign up</h5>
-                    
+
                     <div className='alt_login'>
                         <input type="text"
                             name="name"

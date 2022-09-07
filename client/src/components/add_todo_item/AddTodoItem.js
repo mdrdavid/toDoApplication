@@ -18,8 +18,17 @@ const  AddTodoItem = () => {
     const addItem = async (e)=>{
         e.preventDefault();
             try {
-                const res = await axios.post(`${URL}/items`, {todo:input})
+                const token = localStorage.getItem("token")
+                const res = await axios({
+                    method: 'post',
+                    url:`${URL}/items`,
+                    headers:{
+                        'Authorization': `Bearer ${token}`
+                    },
+                    data: {todo:input}
+                })
                 setListItems(prev=>[...prev,res.data])
+                localStorage.getItem("res", res)
                 console.log(res)
                 setInput("")
             } catch (error) {

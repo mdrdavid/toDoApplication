@@ -5,6 +5,7 @@ import dotenv from "dotenv"
 import todoItemRoute from "./routes/todoItems.js"
 import useRoutes from "./routes/auth.js"
 import cors from "cors"
+import cookieParser from "cookie-parser"
 
 const app = express()
 dotenv.config()
@@ -20,6 +21,7 @@ const connect = ()=>{
 }
 
 //use express.josn() to get data into json format
+app.use(cookieParser())
 app.use(cors())
 app.use(express.json())
 app.use("/api", todoItemRoute)
