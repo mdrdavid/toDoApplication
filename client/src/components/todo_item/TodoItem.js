@@ -5,7 +5,7 @@ import {URL} from "../Constants"
 
 
 const  TodoItem = ({todo}) => {
-  const [todoItems, setTodoItems] = useState([])
+  const [listItems, setListItems] = useState([])
    //store id of item to update
    const [isUpdating, setIsupdating]= useState('')
    const [UpdateItemText, setIsupdateItemText]= useState('')
@@ -23,30 +23,53 @@ const  TodoItem = ({todo}) => {
             },
               url:`${URL}/items/${id}`
             })
-            const newlistItems = todoItems.filter((item=>item._id !==id))
-            setTodoItems(newlistItems)
+            const newlistItems = listItems.filter((todo=>todo._id !==id))
+            setListItems(newlistItems) 
             console.log(res.data)
         } catch (error) {
             console.log(error)
         }
     }
 
+    const completeTodo = async (id)=>{
+      try {
+        const token = localStorage.getItem("token")
+            const res = await axios({
+              method: "post",
+              headers:{
+                'Authorization': `Bearer ${token}`
+            },
+              url:`${URL}/items`
+            })
+     const completeTask = todo.map(todo=>{
+      if(todo._id ===id){
+        todo.completed = !todo.completed
+      }
+      return todo
+     })
+     setListItems(completeTask)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+
     //update item
     const updateItem = async (e) => {
       e.preventDefault()
+      const token = localStorage.getItem("token")
       const res = await axios({
         mathod: "put",
         url:`${URL}/items/${isUpdating}`,
         headers:{
           'Authorization': `Bearer ${token}`
       },
-        data:{item: UpdateItemText}})
+        data:{todo: UpdateItemText}})
       setIsupdateItemText(" ")
       setIsupdating(" ")
     }
         //show input field where we update item from before updating it  
         const updating = () =>{
-          <form className='update-form' onSubmit={e=>{updateItem(e)}}>
+          <form className='update-form' onSubmit={(e)=>updateItem(e)}>
               <input type="text"
               placeholder='New Item'
               className='update-input'
@@ -71,7 +94,7 @@ const  TodoItem = ({todo}) => {
         </>
     }
         
-    </div>
+    </div> 
   )
 }
 

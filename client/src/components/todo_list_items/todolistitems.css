@@ -39,3 +39,25 @@
 .delete{
     background-color: green;
 }
+
+.update-form{
+    background-color: blue;
+    border: 3px solid red;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.update-form .update-input{
+    width: 80%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid black;
+    outline: none;
+}
+
+.update-form .update-button{
+    background-color: rgb(241, 217, 156);
+    color: white;
+    cursor: pointer;
+}
