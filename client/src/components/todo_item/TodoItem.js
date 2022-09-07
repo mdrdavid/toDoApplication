@@ -8,6 +8,7 @@ const  TodoItem = ({todo}) => {
   const [todoItems, setTodoItems] = useState([])
    //store id of item to update
    const [isUpdating, setIsupdating]= useState('')
+   const [UpdateItemText, setIsupdateItemText]= useState('')
 
   //delete item when click delete button
   const deleteItem = async (id)=>{
@@ -24,14 +25,23 @@ const  TodoItem = ({todo}) => {
     }
 
     //update item
+    const updateItem = async (e) => {
+      e.preventDefault()
+      const res = await axios.put(`${URL}/items/${isUpdating}`,{item: UpdateItemText})
+      setIsupdateItemText(" ")
+      setIsupdating(" ")
+    }
         //show input field where we update item from before updating it  
         const updating = () =>{
-          <form className='update-form'>
+          <form className='update-form' onSubmit={e=>{updateItem(e)}}>
               <input type="text"
               placeholder='New Item'
               className='update-input'
               />
-              <button type='submit' className='update-button'>Update Item</button>
+              <button type='submit' className='update-button'
+              onChange={e=>setIsupdateItemText(e.target.value)}
+              value={UpdateItemText}
+              >Update Item</button>
           </form>
       }
 

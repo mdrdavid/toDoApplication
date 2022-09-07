@@ -34,7 +34,12 @@ const SignIn = () => {
                 alert("complete form")
                 // res.status(400).send("All input is required");
             } else {
-                const res = await axios.post(`${URL}/auth/signup`, JSON.stringify(value))
+              const res = await  axios({
+                    method: 'post',
+                    url: `${URL}/auth/signup`,
+                    data: value
+                  })
+                // const res = await axios.post(`${URL}/auth/signup`, value)
                 console.log("data", res)
                 res.status(200).json("sendUser")
                 alert(message)
@@ -48,7 +53,7 @@ const SignIn = () => {
         e.preventDefault()
         const message = "Login successful"
         try {
-            const res = await axios.post(`${URL}/signin`, { name, password })
+            const res = await axios.post(`${URL}/auth/signin`, { name, password })
             const rese = res.data
             console.log(rese)
             setName('')
