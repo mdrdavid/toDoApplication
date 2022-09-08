@@ -7,7 +7,6 @@ const AddTodoItem = ({ addItem }) => {
     const handleChange = (e) => {
         setInput(e.target.value)
     }
-
     return (
         <div className="add-todo-item">
             <input type="text"

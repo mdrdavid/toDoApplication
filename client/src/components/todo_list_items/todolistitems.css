@@ -10,10 +10,13 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 10px;
+    text-transform: capitalize;
     gap: 5px;
 }
 .item-text{
     width: 65%;
+    text-align: justify;
+    font-size: 18px;
 }
 
 .todo-item button{
@@ -29,35 +32,26 @@
 }
 
 .update{
-    background-color: goldenrod;
-}
-
-.complete{
-    background-color: purple;
-}
-
-.delete{
     background-color: green;
 }
 
-.update-form{
-    background-color: blue;
-    border: 3px solid red;
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
+.complete{
+    background-color: burlywood;
 }
 
-.update-form .update-input{
-    width: 80%;
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid black;
-    outline: none;
+.delete{
+    background-color: #8E1600;
 }
 
-.update-form .update-button{
-    background-color: rgb(241, 217, 156);
-    color: white;
+.to-home{
+    color: #000;
+    font-size: 24px;
+    text-align: center;
+    text-decoration: none;
     cursor: pointer;
+    width: 100px;
+    padding: 5px;
+    text-align: center;
+    border-radius: 5px;
+    line-height: 1.2;
 }

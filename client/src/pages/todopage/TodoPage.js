@@ -25,15 +25,31 @@ const TodoPage = () => {
             console.log(error)
         }
     }
+
+     //delete item when click delete button
+    const deleteItem = async (id)=>{
+        try {
+          const token = localStorage.getItem("token")
+            const res = await axios({
+              method: "delete",
+              headers:{
+                'Authorization': `Bearer ${token}`
+            },
+              url:`${URL}/items/${id}`
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
     return (
         <div>
             <NavBar />
             <TodoLIst>
                 <AddTodoItem addItem={addItem} />
-                <TodoListItems />
+                <TodoListItems deleteItem={deleteItem}/>
             </TodoLIst>
             <p>
-                <Link to={"/"} className="toregister">Home</Link>
+                <Link to={"/"} className="to-home">Home</Link>
             </p>
         </div>
     )

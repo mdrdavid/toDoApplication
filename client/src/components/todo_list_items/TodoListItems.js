@@ -5,7 +5,7 @@ import TodoItem from '../todo_item/TodoItem'
 import "./todolistitems.css"
 import { URL } from '../Constants'
 
-const TodoListItems = () => {
+const TodoListItems = ({ deleteItem }) => {
   const [listItems, setListItems] = useState([])
   useEffect(() => {
     const fetchTodoItems = async () => {
@@ -13,10 +13,10 @@ const TodoListItems = () => {
         const token = localStorage.getItem("token")
         const res = await axios({
           method: "get",
-          headers:{
+          headers: {
             'Authorization': `Bearer ${token}`
-        },
-          url:`${URL}/items`
+          },
+          url: `${URL}/items`
         })
         setListItems(res.data)
       } catch (error) {
@@ -25,13 +25,13 @@ const TodoListItems = () => {
     }
     fetchTodoItems()
   }, [])
-  
+
   return (
     <div className='todo-list-items'>
       {
-      listItems?.map(todo => (
-        <TodoItem todo={todo}/>
-      ))
+        listItems?.map(todo => (
+          <TodoItem todo={todo} deleteItem={deleteItem} />
+        ))
       }
     </div>
   )

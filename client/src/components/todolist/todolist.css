@@ -1,6 +1,6 @@
 
 .todo-list{
-    width: 500px;
+    width: 550px;
     text-align: center;
     display: flex;
     flex-direction: column;
@@ -8,7 +8,7 @@
     margin-top: 50px;
     padding: 10px;
     border-radius: 10px;
-    background-color: rebeccapurple;
+    background-color: 	#F0FFF0;
     margin-left: auto;
     margin-right: auto;
 }
@@ -16,5 +16,5 @@
 h2{
     text-align: center;
     font-size: 30px;
-    background-color: brown;
+    background-color: transparent;
 }
