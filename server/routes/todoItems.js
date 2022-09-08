@@ -44,6 +44,7 @@ router.put("/items/:id", verifyToken, async (req, res, next) => {
     try {
         const userId = req.user.payload.id
         const _id = req.params.id
+        console.log("body", req.body)
 
         // find the item by its id and update it
         const itemToUpdate = await Todo.find({ _id, userId })
@@ -52,9 +53,8 @@ router.put("/items/:id", verifyToken, async (req, res, next) => {
             const updatedItem = await Todo.findByIdAndUpdate(
                 _id,
                 {
-                    $set: req.body
+                   ...req.body 
                 },
-                { new: true }
             );
             res.status(200).json({ data: updatedItem, message: "Item updated" })
         }

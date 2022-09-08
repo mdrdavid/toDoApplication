@@ -1,15 +1,16 @@
 
-import React ,{useState}from 'react'
+import React ,{useState, useEffect}from 'react'
 import axios from 'axios'
 import {URL} from "../Constants"
 
-
 const  TodoItem = ({todo}) => {
   const [listItems, setListItems] = useState([])
-   //store id of item to update
-   const [isUpdating, setIsupdating]= useState('')
-   const [UpdateItemText, setIsupdateItemText]= useState('')
+   const [isUpdating, setIsupdating]= useState(false)
+   const [currentTodo, setCurrentTodo]= useState({})
 
+   useEffect(()=>{
+    setCurrentTodo(todo)
+   },[todo])
   //delete item when click delete button
   const deleteItem = async (id)=>{
     console.log("idd", id)
@@ -32,68 +33,45 @@ const  TodoItem = ({todo}) => {
     }
 
     const completeTodo = async (id)=>{
-      try {
-        const token = localStorage.getItem("token")
-            const res = await axios({
-              method: "post",
-              headers:{
-                'Authorization': `Bearer ${token}`
-            },
-              url:`${URL}/items`
-            })
-     const completeTask = todo.map(todo=>{
-      if(todo._id ===id){
-        todo.completed = !todo.completed
-      }
-      return todo
-     })
-     setListItems(completeTask)
-      } catch (error) {
-        console.log(error)
-      }
+        setCurrentTodo(prev=>({...prev, completed: !prev.completed}))
     }
 
     //update item
-    const updateItem = async (e) => {
-      e.preventDefault()
+    const updateItem = async (editedTodo) => {
+      console.log("edit", editedTodo._id)
       const token = localStorage.getItem("token")
       const res = await axios({
-        mathod: "put",
-        url:`${URL}/items/${isUpdating}`,
+        method: "put",
+        url:`${URL}/items/${editedTodo._id}`,
         headers:{
           'Authorization': `Bearer ${token}`
       },
-        data:{todo: UpdateItemText}})
-      setIsupdateItemText(" ")
-      setIsupdating(" ")
+        data:editedTodo})
     }
-        //show input field where we update item from before updating it  
-        const updating = () =>{
-          <form className='update-form' onSubmit={(e)=>updateItem(e)}>
-              <input type="text"
-              placeholder='New Item'
-              className='update-input'
-              />
-              <button type='submit' className='update-button'
-              onChange={e=>setIsupdateItemText(e.target.value)}
-              value={UpdateItemText}
-              >Update Item</button>
-          </form>
-      }
 
+const handleUpdating =()=>{
+    setIsupdating(prev=>!prev)
+  if(isUpdating){
+    updateItem(currentTodo)
+  }
+ 
+}
+const handleTextInput =(e)=>{
+  setCurrentTodo(prev=>({...prev, todo:e.target.value}))
+}
   return (
     <div className="todo-item">
-      {
-      isUpdating === todo._id?
-      updating():
-      <>
-      <p className='item-text'>{todo.todo}</p>
-        <button className='update button' onClick={()=>setIsupdating(todo._id)}>update</button>
-        <button className='delete button'onClick={()=>deleteItem(todo._id)}>delete</button>
-        <button className='complete button'>complete</button>
-        </>
-    }
-        
+      { isUpdating?
+        <input type="text"
+              placeholder='New Item'
+              className='update-input'
+              value={currentTodo.todo}
+              onChange={handleTextInput}
+              /> : null}
+      {!isUpdating?<p className={currentTodo.completed?'strike item-text':' item-text'}>{currentTodo.todo}</p>:null}
+        <button className='update button' onClick={handleUpdating}>update</button>
+        <button className='delete button'onClick={()=>deleteItem(currentTodo._id)}>delete</button>
+        <button className= 'complete button' onClick={completeTodo}>{currentTodo.completed?"completed":"complete"}</button>
     </div> 
   )
 }

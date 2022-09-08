@@ -27,3 +27,7 @@
     padding: 10px;
     cursor: pointer;
 }
+
+.strike {
+    text-decoration: line-through;
+ }

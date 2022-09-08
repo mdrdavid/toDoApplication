@@ -8,7 +8,7 @@ import { URL } from '../Constants'
 const TodoListItems = () => {
   const [listItems, setListItems] = useState([])
   useEffect(() => {
-    const fetchTodoItems = async (id) => {
+    const fetchTodoItems = async () => {
       try {
         const token = localStorage.getItem("token")
         const res = await axios({
@@ -18,7 +18,6 @@ const TodoListItems = () => {
         },
           url:`${URL}/items`
         })
-        console.log(res.data)
         setListItems(res.data)
       } catch (error) {
         console.log(JSON.stringify(error))
