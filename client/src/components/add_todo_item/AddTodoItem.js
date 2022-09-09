@@ -1,12 +1,22 @@
+import React, { useState, useContext } from 'react'
 
-import React, { useState } from 'react'
-import "./addtodoitem.css"
+import "./addtodoitem.css";
+import { GlobalContext } from '../../context/context';
+import { addToDo, getTodos } from '../../context/actions';
 
-const AddTodoItem = ({ addItem }) => {
-    const [input, setInput] = useState("")
+const AddTodoItem = () => {
+    const { toDoDispatch } = useContext(GlobalContext);
+    const [input, setInput] = useState("");
+
+    const addItem = async () => {
+        await addToDo(input)(toDoDispatch);
+        await getTodos()(toDoDispatch)
+    }
+
     const handleChange = (e) => {
         setInput(e.target.value)
     }
+
     return (
         <div className="add-todo-item">
             <input type="text"
@@ -16,7 +26,7 @@ const AddTodoItem = ({ addItem }) => {
                 className="add-item"
                 onChange={handleChange}
             />
-            <button type="submit" className='submit-button' onClick={() => addItem(input)}>Add Item</button>
+            <button type="submit" className='submit-button' onClick={addItem}>Add Item</button>
         </div>
     )
 }
