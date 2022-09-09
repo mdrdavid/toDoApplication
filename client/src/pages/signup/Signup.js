@@ -49,7 +49,6 @@ const Signup = () => {
             <NavBar />
             <div className='container'>
                 <div className='wrapper'>
-                    <div className='alt_login ' id='signup'>
                         <input type="text"
                             name="name"
                             className='input'
@@ -72,7 +71,6 @@ const Signup = () => {
                         <Link to='/'> <h5>or Login</h5></Link>
                     </div>
                 </div>
-            </div>
         </>
     )
 }

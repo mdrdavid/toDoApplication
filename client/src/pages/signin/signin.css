@@ -58,3 +58,21 @@ h5{
     outline: none;
     width: 100%;
 }
+
+@media(max-width:600px) {
+  .container{
+    width: 100%;
+  }
+  .wrapper{
+    width: 100%;
+    border: none;
+  }
+  .input{
+    width: 90%;
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+  .signup{
+    width: 100%;
+  }
+}
