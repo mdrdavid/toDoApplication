@@ -7,6 +7,14 @@ const ToDoSchema = new mongoose.Schema({
         type: String,
         required:true,
     },
+    userId:{
+        type: String,
+        required:true,
+    },
+    completed:{
+        type: Boolean,
+        required: true
+    }
 }, { timestamps:true })
 
 export default mongoose.model("ToDo", ToDoSchema)

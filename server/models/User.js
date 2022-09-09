@@ -14,8 +14,9 @@ const UserSchema = new mongoose.Schema({
     },
     password: {
         type: String,
-        required:true,
-    },
+        minlength: 6,
+        required: true,
+      },
 }, { timestamps:true })
 
 export default mongoose.model("User", UserSchema)
