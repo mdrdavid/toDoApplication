@@ -27,9 +27,6 @@ app.use(express.json())
 app.use("/api", todoItemRoute)
 app.use("/api/auth", useRoutes)
 
-
-
-
 const port = process.env.PORT || 5500
 //connect to sever 
 app.listen(port, ()=>{
