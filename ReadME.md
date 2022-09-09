@@ -6,7 +6,7 @@ using the buttons provided in the UI
 ### Technologies used in the project include: 
 ##### For Backend;
 Nodejs, Express, mongoose, mongodb, jwt, bcrypt, dotenv, cookie-parser
-##### For Fronend;
+##### For Frontend;
 Reactjs, react-router-dom, axios, css
 ### Setup
 To run this project, clone it locally to your local machine using git clone command followed by the url ripository:
