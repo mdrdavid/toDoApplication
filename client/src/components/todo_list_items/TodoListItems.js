@@ -1,38 +1,43 @@
+import React, { useEffect, useState, useContext } from 'react'
 
-import React, { useEffect, useState } from 'react'
-import axios from 'axios'
 import TodoItem from '../todo_item/TodoItem'
 import "./todolistitems.css"
-import { URL } from '../Constants'
+import { GlobalContext } from '../../context/context';
+import { deleteTodo, getTodos, updateToDo } from '../../context/actions';
+
 
 const TodoListItems = () => {
-  const [listItems, setListItems] = useState([])
+  const { todosState, toDoDispatch } = useContext(GlobalContext);
+  const [listItems, setListItems] = useState([]);
+
   useEffect(() => {
-    const fetchTodoItems = async (id) => {
-      try {
-        const token = localStorage.getItem("token")
-        const res = await axios({
-          method: "get",
-          headers:{
-            'Authorization': `Bearer ${token}`
-        },
-          url:`${URL}/items`
-        })
-        console.log(res.data)
-        setListItems(res.data)
-      } catch (error) {
-        console.log(JSON.stringify(error))
-      }
+    const fetchTodos = async () => {
+      await getTodos()(toDoDispatch);
     }
-    fetchTodoItems()
-  }, [])
-  
+
+    fetchTodos();
+  }, []);
+
+  useEffect(() => {
+    setListItems(todosState?.todos?.reverse())
+  }, [todosState]);
+
+  const handleDeleteTodo = async (id) => {
+    await deleteTodo(id)(toDoDispatch)
+    await getTodos()(toDoDispatch);
+  }
+
+  const handleUpdateTodo = async (todo) => {
+    await updateToDo(todo)(toDoDispatch)
+    await getTodos()(toDoDispatch);
+  }
+
   return (
     <div className='todo-list-items'>
       {
-      listItems?.map(todo => (
-        <TodoItem todo={todo}/>
-      ))
+        listItems?.map(todo => (
+          <TodoItem todo={todo} deleteItem={handleDeleteTodo} updateItem={handleUpdateTodo} />
+        ))
       }
     </div>
   )

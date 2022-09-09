@@ -27,15 +27,8 @@ app.use(express.json())
 app.use("/api", todoItemRoute)
 app.use("/api/auth", useRoutes)
 
-
-<<<<<<< HEAD
-//connect to sever 
-const PORT = process.env.PORT || 8000
-app.listen(PORT, ()=>{
-=======
 const port = process.env.PORT || 5500
 //connect to sever 
 app.listen(port, ()=>{
->>>>>>> development
 connect()
 console.log(`Server Running at Port ${port}`)})
