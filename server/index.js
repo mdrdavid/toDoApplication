@@ -28,8 +28,10 @@ app.use("/api", todoItemRoute)
 app.use("/api/auth", useRoutes)
 
 
+
+
+const port = process.env.PORT || 5500
 //connect to sever 
-const PORT = process.env.PORT || 8000
-app.listen(PORT, ()=>{
+app.listen(port, ()=>{
 connect()
-console.log(`Server Running at Port ${PORT}`)})
+console.log(`Server Running at Port ${port}`)})
